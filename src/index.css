@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+@theme {
+  --color-light-sea-green: #70EDE2;
+  --color-light-navy-blue: #1D90D8;
+  --color-dark-navy-blue: #003A92;
+  --color-pure-red: #ff0000;
+  --color-navbar-blue: #E7F3F9;
+  --color-navbar-highlight: #B5DEF2;
+  --color-header-grey: #EFF5F880;
+  --color-header-text: #83CFFF;
+  --color-grey-text: #BDBDBD;
+  --color-graph-text: #272729;
+  --font-roboto: "Roboto";
+}
+@layer base{
+  :root{
+    --color-seablue:rgb(112,237,226); /*'#70EDE2'*/
+  }
+}
