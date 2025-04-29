@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import sidebarOptions from "./sidebarOptions";
+import sidebarOptions from "./SidebarOptions";
 import { SidebarContext } from "../../../context/SidebarContext";
 import { useNavigate } from "react-router-dom";
 

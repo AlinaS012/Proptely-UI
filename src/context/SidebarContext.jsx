@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react"
-import sidebarOptions from "../layouts/main-layout/sidebar/sidebarOptions";
+import sidebarOptions from "../layouts/main-layout/sidebar/SidebarOptions";
 import { useNavigate } from "react-router-dom";
 
 const INITIAL_STATE = {}
