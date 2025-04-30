@@ -6,10 +6,7 @@ import { SidebarContext } from './context/SidebarContext'
 function App() {
   const { selected, setSubSelected } = useContext(SidebarContext)
   const navigate = useNavigate()
-  // useEffect(() => {
-  //   setSubSelected(selected.subheadings[0].name)
-  //   navigate(`${selected.subheadings[0].link}`)
-  // }, [selected])
+  
   useEffect(() => {
     if (selected?.subheadings?.[0]?.name) {
       setSubSelected(prev => {

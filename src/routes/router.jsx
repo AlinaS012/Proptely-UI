@@ -30,29 +30,38 @@ const routes = [
                 children: [
                     {
                         index: true,
-                        element: <PortfolioUnits />,
+                        element: <Suspense fallback={<Loader />}>
+                            <PortfolioUnits />
+                        </Suspense>
                     },
                     {
                         path: paths.properties,
-                        element: <Properties />,
+                        element: <Suspense fallback={<Loader />}>
+                            <Properties />
+                        </Suspense>
                     },
                     {
                         path: paths.tenants,
-                        element: <Tenants />,
+                        element: <Suspense fallback={<Loader />}>
+                            <Tenants />
+                        </Suspense>
                     },
                     {
                         path: paths.all,
-                        element: <All />,
+                        element: <Suspense fallback={<Loader />}>
+                            <All />
+                        </Suspense>
                     },
                     {
                         path: paths.draft,
-                        element: <Draft />,
+                        element: <Suspense fallback={<Loader />}>
+                            <Draft />
+                        </Suspense>
                     },
                 ],
             },
             {
                 path: '*',
-                // element: <Dashboard />, //Error404
                 element: (
                     <MainLayout>
                         <Suspense fallback={<Loader />}>
@@ -60,12 +69,6 @@ const routes = [
                         </Suspense>
                     </MainLayout>
                 ),
-                // children: [
-                //   {
-                //     index: true, 
-                //     element: <Dashboard />,
-                //   },
-                // ],
             },
         ],
     },

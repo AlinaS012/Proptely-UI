@@ -12,6 +12,8 @@
   --color-header-text: #83CFFF;
   --color-grey-text: #BDBDBD;
   --color-graph-text: #272729;
+  --color-table-border: #B5DEF2;
+  --color-table-cell: #E7F3F9;
   --font-roboto: "Roboto";
 }
 @layer base{

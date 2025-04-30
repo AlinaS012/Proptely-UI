@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HeaderLayout from "../../layouts/header-layout";
 import _BarChart from "../../components/barchart/BarChart";
 import _LineChart from "../../components/linechart/LineChart";
 import CustomBarChart from "../../components/barchart/BarChart";
 const Units = () => {
+    const statuses = ["paid", "unpaid", "hold", "bad dept", "overdue"];
+    const [tableResultArr, setTableResultArr] = useState([]);
+
+    useEffect(() => {
+        const generatedArray = Array.from({ length: 7 }, () =>
+            statuses[Math.floor(Math.random() * statuses.length)]
+        );
+        setTableResultArr(generatedArray);
+    }, []);
+    useEffect(() => { console.log(tableResultArr, "table") }, [tableResultArr])
     return (<>
         <div className="flex justify-between w-full">
             <p className="text-[20px] font-semibold">Unit No</p>
-            {/* <select className="px-[20px] rounded bg-dark-navy-blue h-[30px] w-[100px] text-white outline-none">
-                <option></option>
-                <option></option>
-            </select> */}
+
             <div className="relative">
                 <select className="appearance-none w-[100px] h-[30px] bg-dark-navy-blue border border-gray-300 text-white text-[12px] font-[500] py-1 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option className="text-[10px]">Action</option>
@@ -39,11 +46,11 @@ const Units = () => {
             </div>
         </div>
         <HeaderLayout>
-            <div className="flex flex-col w-full md:flex-col lg:grid lg:grid-cols-2 gap-18">
+            <div className="flex flex-col w-full md:flex-col lg:grid lg:grid-cols-2 gap-34">
                 {/* Column 1 */}
                 <div className="flex flex-col gap-2 ">
                     {/*Row 1*/}
-                    <div className="w-full flex flex-col  border border-gray-100 p-2  w-[300px] sm:w-[300px] md:w-[400px] lg:w-[520px]">
+                    <div className="w-full flex flex-col  border border-gray-100 p-2  w-fill sm:w-fill md:w-fill lg:w-[43vw]">
                         <div className="flex flex-col mb-3">
                             <div className="flex justify-between">
                                 <div className="text-[14px] font-[500] text-graph-text ml-2">Recent Transactions</div>
@@ -53,11 +60,9 @@ const Units = () => {
                             </div>
                             <div className="text-grey-text font-[400] text-[12px] ml-2">Jan 24 - Dec 24</div>
                         </div>
-                        <div className="flex justify-around gap-2 items-start px-[4px] pb-[0px] pt-[10px] flex-col-reverse md:flex-row">
-                            {/* <_BarChart /> */}
+                        <div className="flex justify-around gap-2 items-start px-[4px] pb-[0px] pt-[10px] flex-col-reverse [@media(max-width:1100px)]:flex-col-reverse lg:flex-row">
                             {/*BAR CHART START*/}
                             <div className="p-0">
-                                {/* <h1 className="text-2xl font-semibold mb-6">Custom Bar Chart</h1> */}
                                 <CustomBarChart data={[
                                     { label: 'Jan', topValue: 1, bottomValue: 1 },
                                     { label: 'Feb', topValue: 20, bottomValue: 60 },
@@ -96,8 +101,9 @@ const Units = () => {
                             </div>
                         </div>
                     </div>
+
                     {/*Row 2*/}
-                    <div class="bg-white w-full border border-gray-100 w-[300px] sm:w-[300px] md:w-[400px] lg:w-[520px]">
+                    <div class="bg-white w-full border border-gray-100  w-[80vw] sm:w-[80vw] md:w-[40vw] lg:w-[43vw]">
                         <h2 class="text-[14px] font-[500]  mb-4 mx-2 mt-2">Rent/Sale Details</h2>
                         <div className="w-full overflow-hidden">
                             <table class="w-fill text-sm text-left text-gray-700">
@@ -155,218 +161,182 @@ const Units = () => {
                         </div>
                     </div>
 
-                    <div className="w-full h-[50px] border border-gray-300"></div>
+                    {/*Row 3*/}
+                    <div class="bg-white w-full border border-gray-100  w-[80vw] sm:w-[80vw] md:w-[40vw] lg:w-[43vw] rounded-sm">
+                        <section class="bg-white rounded-lg p-4 w-full max-w-4xl text-sm">
+                            <h2 class="text-lg font-semibold mb-4 text-[#272729]">Lease History</h2>
+
+                            <table class="w-full rounded-[10px] table-fixed border border-table-border text-[11px]">
+                                <thead>
+                                    <tr class="text-left text-gray-500 border-b border-gray-200">
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Name</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Status</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Start Date</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">End Date</th>
+                                        <th class="py-2 px-3 font-normal font-[500] text-[11px]">Rent</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-900 font-normal ">
+                                    {Array(7).fill(0).map((arr, index) => (
+                                        <tr class="border-l border-r border-table-border" style={{ backgroundColor: index % 2 === 0 ? "#E7F3F9" : "white" }}>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text">John Thomas</td>
+                                            <td class="py-2 px-3 border-r border-l-2 border-table-border">
+                                                <span class="bg-light-sea-green text-white text-[9px] font-[300] px-1 py-0.5 rounded-[2px] w-[40px] h-[13px]">Active</span>
+                                            </td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text border-r-2 border-l-2 border-table-border">10-12-2024</td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text border-r-2 border-l border-table-border">09-12-2025</td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text">20,000.00</td>
+                                        </tr>))}
+                                </tbody>
+                            </table>
+                        </section>
+
+                    </div>
+
+                    {/*Row 4*/}
+                    <div class="bg-white w-full border border-gray-100  w-[80vw] sm:w-[80vw] md:w-[40vw] lg:w-[43vw] rounded-sm">
+                        <section class="bg-white rounded-lg p-4 w-full max-w-4xl text-sm">
+                            <h2 class="text-lg font-semibold mb-5.5 text-[#272729]">Commission Details</h2>
+                            <h4 class="text-md font-semibold mb-3.5 text-[#272729]">Tenant Commission</h4>
+                            <table class="w-full rounded-[10px] table-fixed border border-table-border text-[11px] mb-5.5">
+                                <thead>
+                                    <tr class="text-left  border-b border-gray-200">
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Description</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Amount</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Status</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Invoice Date</th>
+                                        <th class="py-2 px-3 font-normal font-[500] text-[11px]">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-900 font-normal ">
+                                    {tableResultArr.map((arr, index) => (
+                                        <tr class="border-l border-r border-table-border" style={{ backgroundColor: index % 2 === 0 ? "#E7F3F9" : "white" }}>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text">John Thomas</td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text border-r-2 border-l-2 border-table-border">5000</td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text border-r-2 border-l-2 border-table-border">10-12-2024</td>
+                                            <td class="py-2 px-3 border-r border-l-2 border-table-border">
+                                                <span class="bg-light-sea-green text-white text-[9px] font-[300] px-1 py-0.5 rounded-[2px] w-[40px] h-[13px]" style={{
+                                                    backgroundColor: arr === "paid" ? "#70EDE2" :
+                                                        arr === "unpaid" ? "ffde21" :
+                                                            arr === "hold" ? "gray" :
+                                                                (arr === "bad dept" || arr === "overdue") ? "red" :
+                                                                    "black"
+                                                }}>{arr}</span>
+                                            </td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text">20,000.00</td>
+                                        </tr>))}
+                                </tbody>
+                            </table>
+
+                            <h4 class="text-md font-semibold mb-3.5 text-[#272729]">Owner Commission</h4>
+                            <table class="w-full rounded-[10px] table-fixed border border-table-border text-[11px] mb-5.5">
+                                <thead>
+                                    <tr class="text-left  border-b border-gray-200">
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Description</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Amount</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Status</th>
+                                        <th class="py-2 px-3 font-normal border-r-2 border-l border-table-border font-[500] text-[11px]">Invoice Date</th>
+                                        <th class="py-2 px-3 font-normal font-[500] text-[11px]">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-900 font-normal ">
+                                    {tableResultArr.map((arr, index) => (
+                                        <tr class="border-l border-r border-table-border" style={{ backgroundColor: index % 2 === 0 ? "#E7F3F9" : "white" }}>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text">John Thomas</td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text border-r-2 border-l-2 border-table-border">5000</td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text border-r-2 border-l-2 border-table-border">10-12-2024</td>
+                                            <td class="py-2 px-3 border-r border-l-2 border-table-border">
+                                                <span class="bg-light-sea-green text-white text-[9px] font-[300] px-1 py-0.5 rounded-[2px] w-[40px] h-[13px]" style={{
+                                                    backgroundColor: arr === "paid" ? "#70EDE2" :
+                                                        arr === "unpaid" ? "ffde21" :
+                                                            arr === "hold" ? "gray" :
+                                                                (arr === "bad dept" || arr === "overdue") ? "red" :
+                                                                    "black"
+                                                }}>{arr}</span>
+                                            </td>
+                                            <td class="py-2 px-3 font-[300] text-[11px] text-graph-text">20,000.00</td>
+                                        </tr>))}
+                                </tbody>
+                            </table>
+                        </section>
+
+                    </div>
                 </div>
 
                 {/* Column 2 */}
                 <div className="flex flex-col gap-2">
-                    {/* <div className="w-full w-[340px] lg:w-[372px] h-[148px] p-[18px]">
-                        <div className="flex justify-between">
-                            <div>
-                                <p className="text-[14px] font-[500]">Financial Snapshots</p>
-                            </div>
+
+                    {/*Row 1*/}
+                    <div class="w-[372px] p-4 rounded-md border border-gray-100 bg-white">
+                        {/* <!-- Header --> */}
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-base font-semibold text-gray-800">Financials Snapshot</h2>
                             <div className="bg-light-sea-green h-[12px] w-[10px]">
                                 <img src={'/images/sidebar/filter.png'} />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-[16px]">
-                            <div className="flex justify-between">
-                                <div>
-                                    <div className="flex items-start"><p className="text-[11px] font-[400]">Income</p>
-                                        <svg className="w-3 h-3 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
-                                        </svg>
-                                    </div>
-                                    <p className="text-[11px] font[500]">$789567345</p>
+
+                        {/* <!-- Income --> */}
+                        <div class="flex justify-start gap-[80px] items-start mb-4">
+                            <div>
+                                <div class="flex items-center gap-1">
+                                    <p class="text-[11px] font-[400] text-gray-500">Income</p>
+                                    <svg class="w-5 h-5 rounded text-light-sea-green" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M5 10l5-5 5 5H5z" />
+                                    </svg>
                                 </div>
-                                <_LineChart data={[
-                                    {
-                                        "name": "Page A",
-                                        "uv": 4000,
-                                        "pv": 2400,
-                                        "amt": 2400
-                                    },
-                                    {
-                                        "name": "Page B",
-                                        "uv": 3000,
-                                        "pv": 1398,
-                                        "amt": 2210
-                                    },
-                                    {
-                                        "name": "Page A",
-                                        "uv": 4000,
-                                        "pv": 2400,
-                                        "amt": 2400
-                                    },
-                                    {
-                                        "name": "Page B",
-                                        "uv": 3000,
-                                        "pv": 1398,
-                                        "amt": 2210
-                                    },
-                                    {
-                                        "name": "Page C",
-                                        "uv": 2000,
-                                        "pv": 9800,
-                                        "amt": 2290
-                                    },
-                                    {
-                                        "name": "Page D",
-                                        "uv": 2780,
-                                        "pv": 3908,
-                                        "amt": 2000
-                                    },
-                                    {
-                                        "name": "Page E",
-                                        "uv": 1890,
-                                        "pv": 4800,
-                                        "amt": 2181
-                                    },
-                                    {
-                                        "name": "Page F",
-                                        "uv": 2390,
-                                        "pv": 3800,
-                                        "amt": 2500
-                                    },
-                                    {
-                                        "name": "Page G",
-                                        "uv": 3490,
-                                        "pv": 4300,
-                                        "amt": 2100
-                                    }
-                                ]} />
+                                <p class="text-light-sea-green font-[500] text-[11px]">$598720918</p>
                             </div>
-                            <div className="flex justify-between">
-                                <div>
-                                    <div className="flex items-center">
-                                        <p className="text-[11px] font-[400]">Income</p>
-                                        <svg className="w-3 h-3 ml-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" /></svg></div>
-                                    <p className="text-[11px] font[500]">$789567345</p>
-                                </div>
-                                <_LineChart data={[
-                                    {
-                                        "name": "Page A",
-                                        "uv": 4000,
-                                        "pv": 2400,
-                                        "amt": 2400
-                                    },
-                                    {
-                                        "name": "Page B",
-                                        "uv": 800,
-                                        "pv": 1398,
-                                        "amt": 2210
-                                    },
-                                    {
-                                        "name": "Page A",
-                                        "uv": 100,
-                                        "pv": 2400,
-                                        "amt": 2400
-                                    },
-                                    {
-                                        "name": "Page B",
-                                        "uv": 3000,
-                                        "pv": 1398,
-                                        "amt": 2210
-                                    },
-                                    {
-                                        "name": "Page C",
-                                        "uv": 2000,
-                                        "pv": 9800,
-                                        "amt": 2290
-                                    },
-                                    {
-                                        "name": "Page D",
-                                        "uv": 2780,
-                                        "pv": 3908,
-                                        "amt": 2000
-                                    },
-                                    {
-                                        "name": "Page E",
-                                        "uv": 1890,
-                                        "pv": 4800,
-                                        "amt": 2181
-                                    },
-                                    {
-                                        "name": "Page F",
-                                        "uv": 2390,
-                                        "pv": 3800,
-                                        "amt": 2500
-                                    },
-                                    {
-                                        "name": "Page G",
-                                        "uv": 3490,
-                                        "pv": 4300,
-                                        "amt": 2100
-                                    }
-                                ]} />
-                            </div>
-                        </div>
-                    </div> */}
-                    <div class="w-[372px] h-[148px] border border-[#EFF5F8] rounded-md p-4 flex flex-col justify-between">
-                        <div class="flex justify-between items-start">
-                            <h3 class="text-black font-semibold text-lg">Financials Snapshot</h3>
-                            <div class="w-6 h-6 bg-[#A0F0E8] rounded flex items-center justify-center text-white text-sm font-bold">
-                                <span class="text-[#2ED3B7]">⏵</span>
-                            </div>
+                            {/* <!-- SVG Line Chart --> */}
+
+                            <svg viewBox="0 0 150 50" class="w-[140px] h-[50px]">
+                                <line x1="5" y1="0" x2="5" y2="45" stroke="#edf2f7" stroke-width="0.5" />
+
+                                <line x1="5" y1="45" x2="145" y2="45" stroke="#edf2f7" stroke-width="0.5" />
+
+                                <polyline
+                                    fill="none"
+                                    stroke="#70EDE2"
+                                    stroke-width="1"
+                                    points=" 25,35 45,15 65,20 85,5 105,35 125,30 145,15"
+                                />
+                            </svg>
+
                         </div>
 
-                        <div class="flex justify-between items-end">
-                            <div class="space-y-2">
-                                <div>
-                                    <span class="text-gray-500 text-sm">Income</span>
-                                    <div class="flex items-center space-x-1">
-                                        <span class="text-[#2ED3B7] font-semibold">$598720918</span>
-                                        <span class="text-[#2ED3B7] text-sm">▲</span>
-                                    </div>
+                        {/* <!-- Expense --> */}
+                        <div class="flex justify-start gap-[80px] items-start">
+                            <div>
+                                <div class="flex items-center gap-1">
+                                    <p class="text-[11px] font-[400] text-gray-500">Expense</p>
+                                    <svg class="w-5 h-5 rounded text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M5 10l5 5 5-5H5z" />
+                                    </svg>
                                 </div>
-                                <div>
-                                    <span class="text-gray-500 text-sm">Expense</span>
-                                    <div class="flex items-center space-x-1">
-                                        <span class="text-[#FF5A5F] font-semibold">$20876394</span>
-                                        <span class="text-[#FF5A5F] text-sm">▼</span>
-                                    </div>
-                                </div>
+                                <p class="text-gray-800 font-[500] text-[11px]">$20876394</p>
                             </div>
+                            {/* <!-- SVG Line Chart --> */}
+                            <svg viewBox="0 0 150 50" class="w-[140px] h-[50px]">
+                                <line x1="5" y1="0" x2="5" y2="45" stroke="#edf2f7" stroke-width="0.5" />
 
-                            <div class="flex flex-col space-y-2">
-                                <div class="w-32 h-6 bg-[#D1FAE5] rounded-sm"></div>
-                                <div class="w-32 h-6 bg-[#FEE2E2] rounded-sm"></div>
-                            </div>
+                                <line x1="5" y1="45" x2="145" y2="45" stroke="#edf2f7" stroke-width="0.5" />
+
+                                <polyline
+                                    fill="none"
+                                    stroke="#ff0000"
+                                    stroke-width="1"
+                                    points=" 25,35 45,15 65,20 85,5 105,35 125,30 145,15"
+                                />
+                            </svg>
+
                         </div>
                     </div>
+
                     {/*Row 2*/}
-                    <div class="bg-white w-[372px] h-[160px] border border-[#EFF5F8] rounded-md p-4 rounded-2xl flex justify-between">
+                    <div class="bg-white w-[372px] h-[160px] border border-[#EFF5F8] rounded-md p-4  flex justify-between">
                         <h3 class="text-sm font-semibold text-gray-700 mb-4">Occupancy Stats</h3>
                         <div class="flex justify-center items-center">
                             <div class="relative w-[182px] h-[145px]">
-                                {/* <!-- Circle Background --> */}
-                                {/* <svg class="w-full h-full rotate-[-90deg]">
-                                    <circle cx="48" cy="48" r="38" fill="none" stroke="#E5E7EB" stroke-width="10" />
-                                    <circle
-                                        cx="48" cy="48" r="38" fill="none" stroke="#22D3EE"
-                                        stroke-width="10" stroke-dasharray="238"
-                                        stroke-dashoffset="60"
-                                        stroke-linecap="round"
-                                    />
-                                </svg> */}
-                                {/* <svg class="w-full h-full" viewBox="0 0 96 96">
-                                    <circle
-                                        cx="48" cy="48" r="38"
-                                        fill="none"
-                                        stroke="#E5E7EB"
-                                        stroke-width="8"
-                                    />
-
-                                    <circle
-                                        cx="48" cy="48" r="38"
-                                        fill="none"
-                                        stroke="#22D3EE"
-                                        stroke-width="8"
-                                        stroke-dasharray="190.4 47.6"
-                                        stroke-dashoffset="118.8"
-                                        stroke-linecap="round"
-                                        transform="rotate(-55 48 48)"
-                                    />
-                                </svg> */}
 
                                 <div className="relative flex flex-col h-[155px] items-center gap-0 justify-center">
                                     <svg class="w-full h-full flex" viewBox="0 0 96 96">
@@ -442,9 +412,15 @@ const Units = () => {
                         </div>
                     </div>
 
-                    <div className="bg-white w-[372px]  border border-[#EFF5F8] rounded-md p-4 rounded-2xl flex justify-between">
+                    {/*Row 3*/}
+                    <div className="bg-white w-[372px]  border border-[#EFF5F8] rounded-md p-4  flex justify-between">
                         <div class="bg-white w-full ">
-                            <h3 class="text-sm font-semibold text-gray-700 mb-4">Facility Management</h3>
+                            <div className="flex justify-between">
+                                <h3 class="text-sm font-semibold text-gray-700 mb-4">Facility Management</h3>
+                                <div className="bg-light-sea-green h-[12px] w-[10px]">
+                                    <img src={'/images/sidebar/filter.png'} />
+                                </div>
+                            </div>
 
                             <div class="mb-3">
                                 <div class="text-[7px] font-[300] text-gray-600 mb-1">Plumbing</div>
@@ -466,7 +442,7 @@ const Units = () => {
                                     <div class="bg-light-navy-blue h-[7px] rounded-full w-[55%]"></div>
                                 </div>
                             </div>
-                            <div className="relative flex justify-between items-center mt-2">
+                            <div className="relative flex justify-start gap-5 items-center mt-2">
                                 <h2 className="font-[500] text-[14px]">Completion Status</h2>
                                 <svg class="w-[136px] h-[140px] flex" viewBox="0 0 96 96">
                                     {/* <!-- White base track --> */}
@@ -503,11 +479,240 @@ const Units = () => {
 
 
                                 </svg>
-                                <div class="absolute inset-0 left-[62%] flex items-center justify-center">
+                                <div class="absolute inset-0 left-[22%] flex items-center justify-center">
                                     <span class="text-[24px] font-medium text-light-sea-green">75%</span>
                                 </div>
                             </div>
                         </div>
+
+                    </div>
+
+                    {/*Row 4*/}
+                    <div className="bg-white w-[372px]  border border-[#EFF5F8] rounded-md p-4  flex justify-between">
+                        <div class="bg-white w-full ">
+                            <div className="flex justify-between">
+                                <h3 class="text-sm font-semibold text-gray-700 mb-4">Commission Snapshot</h3>
+                                <div className="bg-light-sea-green h-[12px] w-[10px]">
+                                    <img src={'/images/sidebar/filter.png'} />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="text-[7px] font-[300] text-gray-600 mb-1">Company</div>
+                                <div class="w-[65%] h-[7px] rounded-full bg-navbar-blue relative overflow-hidden">
+                                    <div class="bg-light-sea-green h-full w-[45%] rounded-full absolute top-0 left-0"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="text-[7px] font-[300] text-gray-600 mb-1">Agent 1</div>
+                                <div class="w-[60%] h-[7px] rounded-full bg-navbar-blue relative overflow-hidden">
+                                    <div class="bg-light-sea-green h-full w-[75%] rounded-full absolute top-0 left-0"></div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="text-[7px] font-[300] text-gray-600 mb-1">Agent 2</div>
+                                <div class="w-[55%] h-[7px] rounded-full bg-navbar-blue relative overflow-hidden">
+                                    <div class="bg-light-sea-green h-full w-[55%] rounded-full absolute top-0 left-0"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*Row 5*/}
+                    <div className="bg-white w-[372px]  border border-[#EFF5F8] rounded-md   flex justify-between">
+                        {/* <div class="bg-white rounded-lg w-full max-w-xl text-sm">
+                            <div className="flex justify-between h-[64px] px-4 py-2">
+                                <h2 class="text-lg font-semibold mb-4">Unit Information</h2>
+                                <div className="bg-light-sea-green h-[12px] w-[10px]">
+                                    <img src={'/images/sidebar/filter.png'} />
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-y-2 gap-x-4">
+                                <div className="border-t-1 border-gray-100 flex justify-start gap-[42%] items-center">
+                                    <div class="text-gray-500 ml-2">Owner</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]  ">Manohar Lahori, Karen Foz, see</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Property</div>
+                                    <div class="text-blue-600 underline cursor-pointer font-[300] text-[11px]">My Property</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between ">
+                                    <div class="text-gray-500 ml-2">Unit Tags</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">—</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between ">
+                                    <div class="text-gray-500 ml-2">Unit Size</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">N/A</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between ">
+                                    <div class="text-gray-500 ml-2">Assigned to</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">—</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Unit No</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">2</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Unit Type</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">Hotel</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Unit Category</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">Commercial</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Status</div>
+                                    <div class="text-blue-600 font-[300] text-[11px] underline cursor-pointer">Vacant</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Off Plan</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">No</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Furnished</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">Unfurnished</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Smoking</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">Smoking Not Allowed</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">For Sale</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">No</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Electricity No</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">N/A</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between ">
+                                    <div class="text-gray-500 ml-2">Gas No</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">N/A</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between ">
+                                    <div class="text-gray-500 ml-2">Under Renovation</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">False</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Under Dispute</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">No</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Bed</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">1 Bed</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Parking</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">Not Available</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between">
+                                    <div class="text-gray-500 ml-2">Service Charges Per Sq Ft</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">AED 0.0</div>
+                                </div>
+                                <div className="border-t-1 border-gray-100 flex justify-between ">
+                                    <div class="text-gray-500 ml-2">Total Service Charges</div>
+                                    <div class="text-gray-900 font-[300] text-[11px]">AED 0.0</div>
+                                </div>
+                            </div>
+                        </div> */}
+                        <div class="bg-white rounded-lg w-full max-w-xl text-sm">
+                            <div class="flex justify-between items-center h-[64px] px-4 py-2">
+                                <h2 class="text-lg font-semibold">Unit Information</h2>
+                                <div class="bg-light-sea-green h-[12px] w-[10px]">
+                                    <img src="/images/sidebar/filter.png" alt="Filter" />
+                                </div>
+                            </div>
+                            <table class="w-full text-[11px] border-collapse">
+                                <tbody>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Owner</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">Manohar Lahori, Karen Foz, see</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Property</td>
+                                        <td class="text-blue-600 underline cursor-pointer font-light py-2 px-2">My Property</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Unit Tags</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">—</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Unit Size</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">N/A</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Assigned to</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">—</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Unit No</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">2</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Unit Type</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">Hotel</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Unit Category</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">Commercial</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Status</td>
+                                        <td class="text-blue-600 underline cursor-pointer font-light py-2 px-2">Vacant</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Off Plan</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">No</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Furnished</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">Unfurnished</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Smoking</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">Smoking Not Allowed</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">For Sale</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">No</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Electricity No</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">N/A</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Gas No</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">N/A</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Under Renovation</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">False</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Under Dispute</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">No</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Bed</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">1 Bed</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Parking</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">Not Available</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Service Charges Per Sq Ft</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">AED 0.0</td>
+                                    </tr>
+                                    <tr class="border-t border-gray-100">
+                                        <td class="text-gray-900 py-2 px-2 font-[400] text-[11px]">Total Service Charges</td>
+                                        <td class="text-gray-900 font-light py-2 px-2">AED 0.0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
 
                     </div>
                 </div>
